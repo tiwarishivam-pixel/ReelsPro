@@ -4,14 +4,19 @@ import { SessionProvider } from "next-auth/react";
 import { ImageKitProvider } from "imagekitio-next";
 import { NotificationProvider } from "./Notification";
 
+interface ProvidersProps {
+  children: React.ReactNode;
+}
+
+// Ensure environment variables are defined
 const urlEndpoint = process.env.NEXT_PUBLIC_URL_ENDPOINT!;
 const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY!;
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({ children }: ProvidersProps) {
   const authenticator = async () => {
     try {
       const res = await fetch("/api/imagekit-auth");
-      if (!res.ok) throw new Error("Failed to authenticate");
+      if (!res.ok) throw new Error("Failed to authenticate with ImageKit");
       return res.json();
     } catch (error) {
       console.error("ImageKit authentication error:", error);

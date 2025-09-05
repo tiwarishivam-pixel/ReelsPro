@@ -2,25 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark Theme Colors */
 :root {
   --background: #000000;
   --foreground: #ffffff;
+  --primary: #3b82f6; /* Tailwind blue-500 */
+  --secondary: #1f2937; /* Tailwind gray-800 */
+  --accent: #facc15; /* Tailwind yellow-400 */
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background);
   min-height: 100vh;
+  font-family: 'Inter', sans-serif; /* Modern clean font */
+  line-height: 1.6;
 }
 
-/* Force dark mode for inputs and other elements */
+/* Inputs and Textareas */
 input,
-textarea {
+textarea,
+select,
+button {
   color-scheme: dark;
-  @apply bg-gray-800 border-gray-700 text-white;
+  @apply bg-gray-800 border-gray-700 text-white placeholder-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition;
 }
 
-/* Scrollbar customization for dark theme */
+/* Scrollbar Customization */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -35,4 +43,24 @@ textarea {
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-600;
+}
+
+/* Links */
+a {
+  @apply text-blue-500 hover:text-blue-400 transition-colors;
+}
+
+/* Buttons */
+button {
+  @apply cursor-pointer;
+}
+
+/* Utility enhancements */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+p, span, li {
+  color: var(--foreground);
 }

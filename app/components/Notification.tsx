@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 type NotificationType = "success" | "error" | "warning" | "info";
 
@@ -30,13 +31,26 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
   return (
     <NotificationContext.Provider value={{ showNotification }}>
       {children}
-      {notification && (
-        <div className="toast toast-bottom toast-end z-[100]">
-          <div className={`alert ${getAlertClass(notification.type)}`}>
-            <span>{notification.message}</span>
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {notification && (
+          <motion.div
+            key={notification.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed bottom-5 right-5 z-[9999] w-80"
+          >
+            <div
+              className={`rounded-lg px-4 py-3 shadow-lg text-white font-medium ${getAlertClass(
+                notification.type
+              )}`}
+            >
+              {notification.message}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </NotificationContext.Provider>
   );
 }
@@ -44,15 +58,15 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 function getAlertClass(type: NotificationType): string {
   switch (type) {
     case "success":
-      return "alert-success";
+      return "bg-green-500";
     case "error":
-      return "alert-error";
+      return "bg-red-500";
     case "warning":
-      return "alert-warning";
+      return "bg-yellow-500 text-gray-900";
     case "info":
-      return "alert-info";
+      return "bg-blue-500";
     default:
-      return "alert-info";
+      return "bg-blue-500";
   }
 }
 
