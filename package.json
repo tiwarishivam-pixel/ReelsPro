@@ -33,6 +33,7 @@
     "react-hook-form": "^7.54.0"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.13.0",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",

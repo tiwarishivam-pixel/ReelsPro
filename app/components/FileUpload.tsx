@@ -43,7 +43,11 @@ export default function FileUpload({
     if (evt.lengthComputable) {
       const percent = Math.round((evt.loaded / evt.total) * 100);
       setProgress(percent);
-      onProgress && onProgress(percent);
+
+      // ✅ Fixed ESLint error by using if statement instead of short-circuit
+      if (onProgress) {
+        onProgress(percent);
+      }
     }
   };
 
